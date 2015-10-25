@@ -5,6 +5,7 @@
 
 makeCacheMatrix <- function(x = matrix()) {
 # test edit in remote then to sync local
+
         m <- NULL
         set <- function(y) {
                 x <<- y
