@@ -3,34 +3,54 @@
 
 ## Write a short comment describing this function
 
-makeCacheMatrix <- function(x = matrix()) {
-# test edit in remote then to sync local
+# create a list of functions that:
+# set/pass in new matrix and store it x <<- y
+# get: return what is the matrix stored which inverse is computed 
+# getinserve: return the inverse of a matrix
+# setinverse: perform matrix inversion and store it m <<- solve
 
+makeCacheMatrix <- function(x = matrix()) {
         m <- NULL
+	
         set <- function(y) {
                 x <<- y
                 m <<- NULL
         }
-        get <- function() x
-        setinverse <- function(solve) m <<- solve
-        getinverse <- function() m
-        list(set = set, get = get,
-             setinverse = setinverse,
-             getinverse = getinverse)
+	
+        get <- function() {
+		x
+	}
+	
+        setinverse <- function(solved) {
+		m <<- solved
+	}
+	
+        getinverse <- function() {
+		m
+	}
+	
+        list(	set = set, 
+		get = get,
+		setinverse = setinverse,
+		getinverse = getinverse)
 }
 
 
 ## Write a short comment describing this function
+# if inverse is cached, show cached value
+# else find inverse then store (use setinverse())
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-		m <- x$getinverse()
-        if(!is.null(m)) {
+	inv <- x$getinverse()
+	
+        if(!is.null(inv)) {
                 message("getting cached data")
-                return(m)
+                return(inv)
         }
+	
         data <- x$get()
-        m <- solve(data, ...)
-        x$setinverse(m)
-        m
+        inv <- solve(data, ...)
+        x$setinverse(inv)
+        inv
 }
